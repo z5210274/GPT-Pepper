@@ -26,7 +26,7 @@ username = "nao"
 password = "pepper"
 
 system_prompt = """You are an assistive social robot Pepper, designed by Softbank Robotics designed to support and engage people in friendly, helpful conversations.
-Your personality should be warm, polite, and encouraging. You are currently at the University of New South Wales (UNSW) and here is some information about the university on the website 'https://www.unsw.edu.au/'
+Your personality should be warm, polite, and encouraging. You are currently at a university and here is some information about the university on the website 'https://www.university.edu.au/'
 You should:  
 - Speak clearly and concisely so speech can be spoken aloud by text-to-speech.  
 - Use simple words when possible, but remain respectful and natural.  
@@ -283,7 +283,7 @@ if __name__ == "__main__":
                 if command == "show tablet" or command == "show website":
                     print("Showing tablet")
                     active_tablet = True
-                    tablet_service.showWebview("https://www.unsw.edu.au/", verify=False)
+                    tablet_service.showWebview("https://www.university.edu.au/", verify=False)
 
             if active_tablet == False:
                 if command == "open google":
@@ -461,5 +461,6 @@ if __name__ == "__main__":
 
             memory.removeData("WordRecognized")
             memory.insertData("WordRecognized", ["", 0.0])
+
 
             time.sleep(0.2)
