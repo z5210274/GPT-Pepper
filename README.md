@@ -43,4 +43,4 @@ A clean release is currently being worked on
 
 This is the initial version to upload the main code files and prompts for inspection.
 
-Codebase is not formatted or operational
+Codebase is not fully formatted or operational
