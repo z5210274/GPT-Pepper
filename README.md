@@ -7,7 +7,7 @@ Generating expressive robot co-speech gestures via an iterative Large Language M
 - Python 2.7
 
 ## File Description
-- chatbot.py (Runs the OpenAI API call on Python for LLM output while also processes speech-end detection for real-time transcription and HTTPS handling with pepper_start.py)
+- chatbot.py (Runs the OpenAI API call on Python for LLM output while also processes silence detection for real-time transcription and HTTPS handling with pepper_start.py)
 - pepper_start.py (Runs all the NAOqi Framework calls to communicate with Pepper robot and HTTPS handling with chatbot.py)
 - function_library.py (Contains all the individual primitive joint movement functions for Pepper robot control and LLM construction)
 - generative_movement.py (Contains helper functions for co-speech code generation and execution on Pepper robot)
