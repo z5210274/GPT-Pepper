@@ -145,6 +145,7 @@ class WhisperHandler(BaseHTTPRequestHandler):
                 command = asr(WhisperHandler.model)
                 WhisperHandler.chunks = []
 
+            # For command line input
             #print("Received from client:", data['messages'][len(data['messages']) - 1]['content'])
             print("Received from client:", command)
             command = WhisperHandler.input # IROS
@@ -201,7 +202,7 @@ def summarize_conversation(conversation_history):
     conversation_history = conversation_history[-length:]
 
     summary = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model="gpt-4.1",
         messages=[
             {"role": "system", "content": "You are a helpful assistant. Summarize the key points of this conversation segment in a concise way."},
             {"role": "user", "content": "Here are the last 20 messages from our conversation. Please summarize them:\n" + 
@@ -225,7 +226,7 @@ def summarize_conversation(conversation_history):
 def get_response(conversation_history):
     # ChatGPT
     response = client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-4.1",
             messages=conversation_history
             )
     reply = response.choices[0].message.content
@@ -285,6 +286,7 @@ def generative_response(conversation_history, current_angles):
     
     #"content": create_system_prompt_IROS(current_angles, conversation_history[-1]['content'])
 }
+    ### FOR IROS Iterative Online Manual Few-Shot
     '''conversation_history.insert(1, {
         "role": "user",
         "content": summary_ratings_array_4[i]
@@ -324,23 +326,25 @@ def generative_response(conversation_history, current_angles):
         "role": "assistant",
         "content": phrase_code_array_1[i]
     })'''
+    ###
 
     print(conversation_history)
     #print(create_system_prompt_IROS(current_angles, conversation_history[-1]['content']))
     # ChatGPT
     response = client.chat.completions.create(
-            model="gpt-5.1", # IROS
+            model="gpt-5.1", # FOR normal HRI
             #model="ft:gpt-4.1-2025-04-14:personal:iros-iteration4b:DB1VHsbf", # Iteration 4
             #model="ft:gpt-4.1-2025-04-14:personal:iros-iteration3a:DAaW1kFc", # Iteration 3
             #model="ft:gpt-4.1-2025-04-14:personal:iros-iteration2g:DAPGjWwm", # Iteration 2
             #model="ft:gpt-4.1-2025-04-14:personal:iros-iteration1c:D9r8nnap", # Iteration 1
-            #model="gpt-4.1",
+            #model="gpt-4.1", # FOR IROS
             temperature=1.5,
             messages=conversation_history
             )
     reply = response.choices[0].message.content
     spoken_response, gesture_code = parse_pepper_output(reply)
 
+    ### FOR IROS Iterative Online Manual Few-Shot
     '''conversation_history.pop(1)
     conversation_history.pop(1)
     conversation_history.pop(1)
@@ -349,6 +353,7 @@ def generative_response(conversation_history, current_angles):
     conversation_history.pop(1)
     conversation_history.pop(1)
     conversation_history.pop(1)'''
+    ###
 
     # Ollama
     '''llama_conversation_history = []
@@ -626,7 +631,8 @@ if __name__ == "__main__":
     
     # Load and process merged conversation history
     df_merged = load_merged_conversation_history()
-    
+
+    ### FOR IROS Iterative Online Manual Few-Shot
     # Create array merging phrase and code into single string
     global phrase_code_array_1
     phrase_code_array_1 = []
@@ -678,34 +684,9 @@ if __name__ == "__main__":
         summary_ratings_array_4.append(summary_rating)
     #print(phrase_code_array)
     #print(summary_ratings_array)
+    ###
 
     client = OpenAI()
     vad = webrtcvad.Vad(3)
     WhisperHandler.model = whisper.load_model("small.en", device="cuda")
     host_server()
-
-    '''conversation_history = []
-    conversation_history.append({
-        "role": "system", 
-        "content": "You are a helpful and social assistant robot or chatbot. Please answer the user's questions and assist with tasks."
-    })
-
-    while True:
-        user_message = input("You: ")
-        if user_message.lower() == "exit":
-            print("Exiting chat...")
-            break
-        conversation_history.append({"role": "user", "content": user_message})
-
-        response = client.chat.completions.create(
-            model="gpt-4o",
-            messages=conversation_history
-            )
-        reply = response.choices[0].message.content
-        conversation_history.append({"role": "assistant", "content": reply})
-
-        if len(conversation_history) > 40:
-            conversation_history = summarize_conversation(conversation_history)
-
-
-        print(reply)'''
