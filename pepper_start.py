@@ -14,9 +14,7 @@ import cv2
 import base64
 import numpy as np
 
-#PEPPER_IP = "192.168.1.143"
 PEPPER_IP = "10.68.139.169"
-#PEPPER_IP = "172.21.53.169"
 PEPPER_PORT = 9559
 recorder_filepath = '/home/nao/recordings/input.wav'
 local_path = './recordings/input.wav'
@@ -251,26 +249,29 @@ if __name__ == "__main__":
         while True:
             data = memory.getData("WordRecognized")
             #print(data)
+            ### Used for voice input
             #command = data[0].strip().lower() if data and data[1] >= 0.45 else ""
             #conf = data[1]
-            '''if data[1] < 0.5:
-                print(data[0])
-                print(data[1])'''
             #command = command.replace("<...>", "").replace("/...>","").strip()
+            ###
 
             '''image = camera_proxy.getImageRemote(vision)
             if image is not None:
                 print(threading.Thread(target=vision_image, args=(image,)).start())'''
 
+            ### Used for command line input
             command = ""
             command = raw_input("Text input command: ").strip().lower() if command == "" else command
             command = raw_input("Text input command: ").strip().lower()
-            
+            ###
+
+            ### Used for voice input
             '''if command != "":
                 #print(command)
                 conversation_history.append({"role": "user", "content": command})
                 output, conversation_history = chatbot(conversation_history)
                 tts.say(str(output))'''
+            ###
 
             if command == "exit":
                 asr.unsubscribe("Test_ASR")
@@ -317,6 +318,7 @@ if __name__ == "__main__":
                 else:
                     tablet_service.hideWebview()
 
+            ### FOR IROS
             if command == "text input":
                 input = raw_input("Enter your text input for the chatbot: ").strip()
                 tmp_history = conversation_history
@@ -390,6 +392,7 @@ if __name__ == "__main__":
                     asr.pause(False)
                     recording = False'''
 
+            ### FOR normal HRI
             if recording == False:
                 if command == "hey pepper" or command == "hi pepper":
                     tts.stopAll()
