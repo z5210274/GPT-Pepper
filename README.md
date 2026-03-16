@@ -15,16 +15,26 @@ Generating expressive robot co-speech gestures via an iterative Large Language M
 
 We have also included the Co-speech_system_prompt.txt for easy inspection of system prompt used for co-speech generative movement.
 
+## Before running code
+- Make sure to disable Pepper robot awareness, background strategy and state for video recording and no autonomous movement
+- Make sure to configure all directory access in code to your local computer (e.g., "_local_path = './recordings/input.wav_")
+- Make sure to configure IP and PORT address for NAO access (e.g., _PEPPER_IP = "10.68.139.169", PEPPER_PORT = 9559_)
+- The code in pepper_start.py contains the ability to run terminal command line input of speech and also voice input of speech
+- The code in chatbot.py contains the ability to directly input LLM speech input/output and also voice input of speech
+- Code in both pepper_start.py and chatbot.py has separate code used for IROS iterative online study and in-person HRI
+
 ## Commands to Run Code
-For deployment on robot:
+For deployment on robot in separate terminals:
 To be run on a Python 2.7 terminal:
-'''
+```
 python ./pepper_start.py
-'''
+```
 To be run on a Python 3.10 terminal:
-'''
+```
 python ./chatbot.py
-'''
+```
+
+## After running code for iterative online user study
 
 A clean release is currently being worked on
 
